@@ -1,0 +1,18 @@
+# NOTE: use $$ to escape $ in docker compose yaml
+
+# The config below was obtained from: https://nginxproxymanager.com/guide/#quick-setup
+
+services:
+  nginx_proxy_manager:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    # ports: # No need to expose ports when using a reverse proxy like NPM as a sibling compose service
+    #   - 80:80 # 
+    #   - 81:81 # 
+    #   - 443:443 # 
+    volumes:
+      - nginx_proxy_manager_data:/data
+      - nginx_proxy_manager_data:/etc/letsencrypt
+
+volumes:
+  nginx_proxy_manager_data:
