@@ -3,16 +3,18 @@
 # The config below was obtained from: https://nginxproxymanager.com/guide/#quick-setup
 
 services:
+
   nginx_proxy_manager:
     image: 'jc21/nginx-proxy-manager:latest'
     restart: unless-stopped
-    # ports: # No need to expose ports when using a reverse proxy like NPM as a sibling compose service
-    #   - 80:80 # 
-    #   - 81:81 # 
-    #   - 443:443 # 
+    ports:
+      - 80:80 # public http port
+      - 81:81 # web dashboard
+      - 443:443 # public https port
     volumes:
       - nginx_proxy_manager_data:/data
       - nginx_proxy_manager_data:/etc/letsencrypt
+      - ./custom_config:/data/nginx/custom # see https://nginxproxymanager.com/advanced-config/#custom-nginx-configurations
 
 volumes:
   nginx_proxy_manager_data:
